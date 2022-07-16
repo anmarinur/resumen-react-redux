@@ -97,7 +97,7 @@ use.Effect(     // Equivalente a componentDidUpdate(). Se ejecuta si hay cambios
 ```
 
 ```js
-use.Effect(     // Equivalente a componentWillUnmount(). Se ejecuta si hay cambios en el estado dependecia
+use.Effect(     // Equivalente a componentWillUnmount(). Se ejecuta el return cuando se desmonte el componente
   () => return {
     () => {}
   }
@@ -108,4 +108,44 @@ use.Effect(     // Equivalente a componentWillUnmount(). Se ejecuta si hay cambi
 
 ```js
 
+```
+
+## Conectando componentes al estado global
+
+Con esto los estados y las funciontes pasan como parámetros al componente. Si es de clase this.props y si es funcional props o por destruture (no estoy seguro como se escribe)
+
+## Componente de clase
+
+### Método 1
+```js
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  return {
+    nombreCualquira: state.name
+  }
+}
+
+export default connect(mapStateToProps, { functionCreator })(NombreDelComponente);  
+```
+
+### Método 2
+
+```js
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => {
+  return {
+    nombreCualquira: state.name
+  }
+}
+
+const mapDispatchToProps(dispatch) {
+  return {
+    funcionX: paramX => dispatch(funcionCreadora(paramX)),
+    funcionY: paramY => dispatch(funcionCreadora(paramY))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NombreDelComponente);  
 ```
