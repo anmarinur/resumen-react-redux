@@ -106,8 +106,39 @@ use.Effect(     // Equivalente a componentWillUnmount(). Se ejecuta el return cu
 
 ## Creando el store
 
-```js
+### Método 1
 
+```js
+import { createStore, applyMiddleware, compose } from "redux";
+import Reducer from "./rutaDelReducer.js";
+import thunk from "redux-thunk";
+
+const composeEnhacer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;  // Para conectarme a la herramienta del navegador (extensión Chrome)
+
+const store = createStore(
+  rootReducer,
+  composeEnhacer(applyMiddleware(thunk)),
+);
+
+export default store;
+```
+
+```js
+import { createStore, applyMiddleware, compose } from "redux";
+import Reducer from "./rutaDelReducer.js";
+import thunk from "redux-thunk";
+
+const composeEnhacer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;  // Para conectarme a la herramienta del navegador (extensión Chrome)
+
+const store = createStore(
+    Reducer,
+    compose(
+        applyMiddleware(thunk), //Necesario para hacer acciones asincrónicas
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+)
+
+export default store;
 ```
 
 ## Conectando componentes al estado global
@@ -148,4 +179,24 @@ const mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NombreDelComponente);  
+```
+
+## Componentes funcionales (Hooks)
+
+```js
+import { useDispatch, useSelector} from 'react-redux'
+
+const dispatch = useDispatch();
+const nombreCualquiera = useSelector(state => state.name);
+
+...
+
+Para usar el dispatch simplemente se invoca con la función creadora
+
+```js
+<div onClick={
+  () => dispatch(funcionCreadora(name))
+}>Botón</div>
+```
+
 ```
