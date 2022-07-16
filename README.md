@@ -189,14 +189,9 @@ import { useDispatch, useSelector} from 'react-redux'
 const dispatch = useDispatch();
 const nombreCualquiera = useSelector(state => state.name);
 
-...
-
 Para usar el dispatch simplemente se invoca con la función creadora
 
-```js
 <div onClick={
   () => dispatch(funcionCreadora(name))
 }>Botón</div>
-```
-
 ```
